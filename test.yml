@@ -1,6 +1,6 @@
 ---
-- name: Hello world
-  hosts: 172.21.1.100
+- name: test
+  hosts: group1
   tasks:
     - name: test
       shell: echo "Hello world!"
