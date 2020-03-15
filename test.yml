@@ -1,3 +1,6 @@
 ---
 - name: Hello world
-  shell: echo "Hello world!"
+  hosts: 172.21.1.100
+  tasks:
+    - name: test
+      shell: echo "Hello world!"
