@@ -1,0 +1,48 @@
+---
+- name: This is testing playbook for configuring Apache Web Serive
+  hosts: group1
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Install httpd packages
+      yum:
+        name: httpd
+        state: latest
+
+    - name: Start firewalld and apache service
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop: 
+        - httpd
+        - firewalld
+
+    - name: Copy content to index.html
+      copy:
+        content: "Hello from {{ ansible_facts['fqdn'] }}!\n" 
+        dest: /var/www/html/index.html
+      notify: restart apache service
+
+    - name: rule for firewalld
+      firewalld:
+        service: http
+        immediate: yes
+        permanent: true
+        state: enabled
+  
+  handlers:
+    - name: restart apache service
+      service:
+        name: httpd
+        state: restarted
+
+- name: Check that a page returns a status 200 and fail if the word AWESOME is not in the page contents
+  hosts: localhost
+  tasks:
+    - name: blah 
+      uri:
+        url: http://node1.example.com
+        return_content: yes
+        status_code: 200
+    
