@@ -41,8 +41,5 @@
   hosts: localhost
   tasks:
     - name: blah 
-      uri:
-        url: http://node1.example.com
-        return_content: yes
-        status_code: 200
+      shell: curl http://node1.example.com && curl http://node2.example.com
     
