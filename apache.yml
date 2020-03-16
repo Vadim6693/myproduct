@@ -36,15 +36,3 @@
       service:
         name: httpd
         state: restarted
-
-- name: Check that a page returns a status 200 and fail if the word AWESOME is not in the page contents
-  hosts: localhost
-  tasks:
-    - name: blah 
-      shell: curl http://node1.example.com && curl http://node2.example.com
-      register: result
-      
-- name: show result
-  debug:
-    msg: result.stdout
-    
